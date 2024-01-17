@@ -1,0 +1,53 @@
+{
+    "1186561359": {
+        "receiver_type": "private",
+        "status": "approved",
+        "name": "Makshz",
+        "receiver_id": "1186561359",
+        "data": {
+            "first_name": "Ю̷̣̬̬͙͒́ͅ л̶̞̠͖̘̖͒͌͂͂͌̑̇́̍̒̌͊̔͐̍̋̕̚̚͠ и̶̡͚͍͇̙͖͚͎̙͎͌̉̏̋̅̏̃̓͌̔̚͜ͅ",
+            "contact": {
+                "phone_number": "77712842046",
+                "first_name": "Ю̷̣̬̬͙͒́ͅ л̶̞̠͖̘̖͒͌͂͂͌̑̇́̍̒̌͊̔͐̍̋̕̚̚͠ и̶̡͚͍͇̙͖͚͎̙͎͌̉̏̋̅̏̃̓͌̔̚͜ͅ",
+                "last_name": "а̴̛͍̗̠̞͕̥̦͕̯̘͗̂͂̏̍̂̈́̈́͆͛̍̇͛͘͝͠н̵̧͖̩̜̱̲͊̄̈]̸̇̀͂ ̡̧̮͇͎͚̜͍̩̞͔̹͚͔̾̈͒",
+                "user_id": 1186561359,
+                "vcard": null
+            },
+            "last_name": "а̴̛͍̗̠̞͕̥̦͕̯̘͗̂͂̏̍̂̈́̈́͆͛̍̇͛͘͝͠н̵̧͖̩̜̱̲͊̄̈]̸̇̀͂ ̡̧̮͇͎͚̜͍̩̞͔̹͚͔̾̈͒",
+            "full_name": "Ю̷̣̬̬͙͒́ͅ л̶̞̠͖̘̖͒͌͂͂͌̑̇́̍̒̌͊̔͐̍̋̕̚̚͠ и̶̡͚͍͇̙͖͚͎̙͎͌̉̏̋̅̏̃̓͌̔̚͜ͅ а̴̛͍̗̠̞͕̥̦͕̯̘͗̂͂̏̍̂̈́̈́͆͛̍̇͛͘͝͠н̵̧͖̩̜̱̲͊̄̈]̸̇̀͂ ̡̧̮͇͎͚̜͍̩̞͔̹͚͔̾̈͒",
+            "is_bot": false,
+            "bio": null,
+            "url": "tg://user?id=1186561359"
+        }
+    },
+    "-1002083371916": {
+        "receiver_type": "supergroup",
+        "status": "not approved",
+        "name": "Проверка бота",
+        "receiver_id": "-1002083371916",
+        "data": {
+            "is_forum": null,
+            "description": null
+        }
+    },
+    "-1002110759875": {
+        "receiver_type": "supergroup",
+        "status": "not approved",
+        "name": "Проверка бота",
+        "receiver_id": "-1002110759875",
+        "data": {
+            "is_forum": null,
+            "description": null
+        }
+    },
+    "-1002007749059": {
+        "receiver_type": "channel",
+        "status": "not approved",
+        "name": "Шшшплпл",
+        "receiver_id": "-1002007749059",
+        "data": {
+            "is_forum": null,
+            "description": null
+        }
+    }
+}
