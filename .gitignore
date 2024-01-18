@@ -1,6 +1,3 @@
-.venv
-Background.jpg
-foo.png
-Objects.drawio
-requirements2.txt
-users_data.json
+/.venv
+/requirements2.txt
+/data
