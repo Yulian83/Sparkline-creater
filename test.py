@@ -1,5 +1,5 @@
-import matplotlib.pyplot as plt
-import numpy as np
+from matplotlib import pyplot
+import numpy
 import mplcyberpunk
 from typing import Literal
 from scipy.interpolate import pchip_interpolate
@@ -23,23 +23,25 @@ class Sparkline:
         self.verify_y_coord(y_coord)
         self.verify_style(style)
 
-        self.__y_coord = np.array(y_coord)
-        self.__x_coord = np.array([i for i in range(len(self.__y_coord))])
+        self.__y_coord = numpy.array(y_coord)
+        self.__x_coord = numpy.array([i for i in range(len(self.__y_coord))])
         self.__style = style
         self.title = title
 
     def create(self) -> int:
-        plt.style.use(self.__style_choices[self.__style])
-        plt.rcParams['font.sans-serif'] = ['Arial'] 
+        pyplot.style.use(self.__style_choices[self.__style])
+        pyplot.rcParams['font.sans-serif'] = ['Arial'] 
         
-        fig = plt.figure(figsize=(9, 3))
+        fig = pyplot.figure(figsize=(9, 3))
         ax = fig.add_subplot() 
             
         x_dots = self.__x_coord
         y_dots = self.__y_coord     
 
-        x_lines = np.linspace(x_dots.min(), x_dots.max(), 100)
+        x_lines = numpy.linspace(x_dots.min(), x_dots.max(), 100)
         spline_values = self.pchip_interpolation(x_dots, y_dots, x_lines)
+
+        # pyplot.ylim(0, 100)
 
         if(self.title != None):
             ax.set_title(self.title)
@@ -49,13 +51,13 @@ class Sparkline:
             mplcyberpunk.add_glow_effects(ax=ax,gradient_fill=True)
         elif(self.__style == 'dark_background'):
             ax.plot(x_lines, spline_values, 'red')
-            plt.fill_between(x_lines, spline_values, color='red', alpha=0.3)
+            pyplot.fill_between(x_lines, spline_values, color='red', alpha=0.3)
         else:
             ax.plot(x_lines, spline_values)
-            plt.fill_between(x_lines, spline_values, alpha=0.3)
+            pyplot.fill_between(x_lines, spline_values, alpha=0.3)
 
         ax.set_axis_off()
-        plt.savefig('./data/sparkline.png')
+        pyplot.savefig('./data/sparkline.png')
         return 1
     
     @classmethod
@@ -78,7 +80,7 @@ class Sparkline:
     @staticmethod
     def pchip_interpolation(x, y, new_x) :
         """This method makes the graph smooth"""
-        new_x = np.clip(new_x, min(x), max(x))
+        new_x = numpy.clip(new_x, min(x), max(x))
         return pchip_interpolate(x, y, new_x)
     
     @property
@@ -98,6 +100,5 @@ class Sparkline:
     @y_coord.setter
     def y_coord(self, y_coord: list[int | float]) -> None:
         self.verify_y_coord(y_coord)
-        self.__y_coord = np.array(y_coord)
-        self.__x_coord = np.array([i for i in range(len(self.__y_coord))])
-        
+        self.__y_coord = numpy.array(y_coord)
+        self.__x_coord = numpy.array([i for i in range(len(self.__y_coord))])
