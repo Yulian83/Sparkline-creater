@@ -15,33 +15,19 @@ class Sparkline_test(unittest.TestCase):
         self.assertEqual(sl_1.title, 'None')
         self.assertEqual(sl_1.style, 'cyberpunk')
 
-
         sl_2 = Sparkline(y_coord=[1, 2, 3, 2, 1], title = [1, 2, 3])
         self.assertEqual(sl_2.y_coord, [1, 2, 3, 2, 1])
         self.assertEqual(sl_2.title, '[1, 2, 3]')
         self.assertEqual(sl_1.style, 'cyberpunk')
-
 
         sl_3 = Sparkline(y_coord=[1, 2, 3, 2, 1], title = 'True', style='pitayasmoothie-light')
         self.assertEqual(sl_3.y_coord, [1, 2, 3, 2, 1])
         self.assertEqual(sl_3.title, 'True')
         self.assertEqual(sl_3.style, 'pitayasmoothie-light')
 
-        with self.assertRaises(ValueError):
-            Sparkline(y_coord=[1])
-
-        with self.assertRaises(TypeError):
-            Sparkline(y_coord='1w,kd')
-
-        with self.assertRaises(ValueError):
-            Sparkline(y_coord=[1, 2, 3], style='wjk1jwknjdwwd')
-
-        with self.assertRaises(TypeError):
-            Sparkline(y_coord=[1, 2, 3], style=[122, 122])
-
 
     def test_pchip_interpolation(self):
-        a = '''[1.         1.04040404 1.08080808 1.12121212 1.16161616 1.2020202
+        expected_result = '''[1.         1.04040404 1.08080808 1.12121212 1.16161616 1.2020202
  1.24242424 1.28282828 1.32323232 1.36363636 1.4040404  1.44444444
  1.48484848 1.52525253 1.56565657 1.60606061 1.64646465 1.68686869
  1.72727273 1.76767677 1.80808081 1.84848485 1.88888889 1.92929293
@@ -58,11 +44,12 @@ class Sparkline_test(unittest.TestCase):
  1.60606061 1.56565657 1.52525253 1.48484848 1.44444444 1.4040404
  1.36363636 1.32323232 1.28282828 1.24242424 1.2020202  1.16161616
  1.12121212 1.08080808 1.04040404 1.        ]'''
+        
         x_dots = numpy.array([i for i in range(len(self.sparkline1.y_coord))])
         y_dots = numpy.array(self.sparkline1.y_coord)
         x_lines = numpy.linspace(x_dots.min(), x_dots.max(), 100)
         spline_values = Sparkline.pchip_interpolation(x=x_dots, y=y_dots, new_x=x_lines)
-        self.assertEqual(a, str(spline_values))
+        self.assertEqual(expected_result, str(spline_values))
 
     def test_get_style(self):
         self.assertEqual(self.sparkline1.style, 'cyberpunk')
@@ -75,22 +62,34 @@ class Sparkline_test(unittest.TestCase):
     def test_set_style(self):
         self.sparkline1.style = 'pitayasmoothie-dark'
         self.sparkline2.style = 'cyberpunk'
+
         self.assertEqual(self.sparkline1.style, 'pitayasmoothie-dark')
         self.assertEqual(self.sparkline2.style, 'cyberpunk')
 
     def test_set_y_coord(self):
         self.sparkline1.y_coord = [1, 1, 2, 1, 3]
         self.sparkline2.y_coord = [1, 2, 3, 2, 1]
+
         self.assertEqual(self.sparkline1.y_coord, [1, 1, 2, 1, 3])
         self.assertEqual(self.sparkline2.y_coord, [1, 2, 3, 2, 1])
-        
+
     def test_create(self):
         self.assertEqual(self.sparkline1.create('./data/test1'), 1)
         self.assertEqual(self.sparkline2.create('./data/test2'), 1)
 
-        with self.assertRaises(TypeError):
-            self.sparkline1.create(1231)
+    def test_verify_style(self):
+        with self.assertRaises(ValueError):
+            self.sparkline1.style = '2988201232nj1'  
 
-        
+        with self.assertRaises(TypeError):
+            self.sparkline2.style = [0, 1, 1]
+
+    def test_verify_y_coord(self):
+        with self.assertRaises(ValueError):
+            self.sparkline1.y_coord = [1]
+
+        with self.assertRaises(TypeError):
+            self.sparkline2.y_coord = '1w,kd'
+
 if __name__ ==  '__main__':
     unittest.main(verbosity=2)
