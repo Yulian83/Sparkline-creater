@@ -1,4 +1,5 @@
 from matplotlib import pyplot
+
 import numpy
 import mplcyberpunk
 from typing import Literal
@@ -23,27 +24,30 @@ class Sparkline:
         self.verify_y_coord(y_coord)
         self.verify_style(style)
 
-        self.__y_coord = numpy.array(y_coord)
-        self.__x_coord = numpy.array([i for i in range(len(self.__y_coord))])
+        self.__y_coord = y_coord
         self.__style = style
-        self.title = title
+        self.__title = str(title)
 
-    def create(self) -> int:
+    def create(self, file_path: str) -> int:
+        if not type(file_path) == str:
+            raise TypeError('The "style" variable should be str') 
+        
         pyplot.style.use(self.__style_choices[self.__style])
         pyplot.rcParams['font.sans-serif'] = ['Arial'] 
         
         fig = pyplot.figure(figsize=(9, 3))
         ax = fig.add_subplot() 
             
-        x_dots = self.__x_coord
-        y_dots = self.__y_coord     
+        x_dots = numpy.array([i for i in range(len(self.__y_coord))])
+        y_dots = numpy.array(self.__y_coord)   
 
         x_lines = numpy.linspace(x_dots.min(), x_dots.max(), 100)
+
         spline_values = self.pchip_interpolation(x_dots, y_dots, x_lines)
 
         # pyplot.ylim(0, 100)
 
-        if(self.title != None):
+        if(self.title != 'None'):
             ax.set_title(self.title)
       
         if(self.__style == 'cyberpunk'):
@@ -57,20 +61,21 @@ class Sparkline:
             pyplot.fill_between(x_lines, spline_values, alpha=0.3)
 
         ax.set_axis_off()
-        pyplot.savefig('./data/sparkline.png')
+        pyplot.savefig(file_path)
         return 1
     
     @classmethod
     def verify_style(cls, style: Literal['cyberpunk', 'Solarize_Light2', 'dark_background',
                                          'pitayasmoothie-dark', 'pitayasmoothie-light'] ='cyberpunk') -> None:
-        
+        if type(style) != str:
+            raise TypeError('The "style" variable should be str')
         if not style in cls.__style_choices.keys():
-            raise ValueError(f'style must be one of {cls.__style_choices.keys()}')       
+            raise ValueError(f'style must be one of {cls.__style_choices.keys()}')      
         
     @classmethod
     def verify_y_coord(cls, y_coord: list[int | float]) -> None:
         if(type(y_coord) != list):
-            raise ValueError('the y_coordinate field must be a list[int | float]')    
+            raise TypeError('the y_coordinate field must be a list[int | float]')    
         if len(y_coord) <= 1:
             raise ValueError('there must be more than 1 value in y_coord')    
         for coord in y_coord:
@@ -89,7 +94,11 @@ class Sparkline:
     
     @property
     def y_coord(self):
-        return self.y_coord
+        return self.__y_coord
+    
+    @property
+    def title(self):
+        return self.__title
     
     @style.setter
     def style(self, style: Literal['cyberpunk', 'Solarize_Light2', 'dark_background',
@@ -100,5 +109,11 @@ class Sparkline:
     @y_coord.setter
     def y_coord(self, y_coord: list[int | float]) -> None:
         self.verify_y_coord(y_coord)
-        self.__y_coord = numpy.array(y_coord)
-        self.__x_coord = numpy.array([i for i in range(len(self.__y_coord))])
+        self.__y_coord = y_coord
+
+    @title.setter
+    def title(self, title) -> None:
+        self.__title = str(title)
+
+sl = Sparkline([1, 2, 3, 2, 1])
+sl.create('./data/data')
