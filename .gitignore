@@ -1,6 +1,6 @@
 /.venv
 /requirements2.txt
-/data
 /test2.py
 /.vscode
 __pycache__
+/.mypy_cache
