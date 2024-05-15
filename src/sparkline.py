@@ -1,12 +1,9 @@
 from matplotlib import pyplot
-from flask import Flask, request, send_file, jsonify
 import numpy
-import mplcyberpunk
+import mplcyberpunk  # type: ignore
 from typing import Literal
-from scipy.interpolate import pchip_interpolate
-from tempfile import NamedTemporaryFile
+from scipy.interpolate import pchip_interpolate  # type: ignore
 
-app = Flask(__name__)
 
 class Sparkline:
     __style_choices = {'cyberpunk': 'cyberpunk',
@@ -116,30 +113,3 @@ class Sparkline:
     @title.setter
     def title(self, title: str) -> None:
         self.__title = str(title)
-
-
-@app.route('/')
-def home():
-    return 'Hello World'
-
-
-@app.route('/sparkline', methods=['POST'])
-def sparkline():
-    data = request.get_json()
-    y_coord = data.get('y_coord')
-    title = data.get('title', 'None')
-    style = data.get('style', 'cyberpunk')
-
-    if not y_coord:
-        return jsonify({"error": "y_coord is required"}), 400
-
-    sparkline = Sparkline(y_coord=y_coord, title=title, style=style)
-
-    with NamedTemporaryFile(delete=True, suffix='.png') as temp_file:
-        sparkline.create(temp_file.name)
-        temp_file.seek(0)
-        return send_file(temp_file.name, mimetype='image/png')
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

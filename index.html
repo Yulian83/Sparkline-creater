@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Sparkline Generator</title>
+    <script>
+        async function generateSparkline() {
+            const yCoord = document.getElementById('y_coord').value.split(',').map(Number);
+            const title = document.getElementById('title').value;
+            const style = document.getElementById('style').value;
+
+            const response = await fetch('/api/sparkline', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ y_coord: yCoord, title: title, style: style }),
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                document.getElementById('sparkline').src = url;
+            } else {
+                alert('Error generating sparkline');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Sparkline Generator</h1>
+    <form onsubmit="event.preventDefault(); generateSparkline();">
+        <label for="y_coord">Y Coordinates (comma separated):</label><br>
+        <input type="text" id="y_coord" name="y_coord"><br><br>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title"><br><br>
+        <label for="style">Style:</label><br>
+        <select id="style" name="style">
+            <option value="cyberpunk">Cyberpunk</option>
+            <option value="Solarize_Light2">Solarize Light2</option>
+            <option value="dark_background">Dark Background</option>
+            <option value="pitayasmoothie-dark">Pitaya Smoothie Dark</option>
+            <option value="pitayasmoothie-light">Pitaya Smoothie Light</option>
+        </select><br><br>
+        <button type="submit">Generate Sparkline</button>
+    </form>
+    <br>
+    <img id="sparkline" alt="Your Sparkline will appear here" />
+</body>
+</html>
